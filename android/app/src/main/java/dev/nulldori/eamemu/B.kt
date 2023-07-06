@@ -1,10 +1,9 @@
 package dev.nulldori.eamemu
 
 class B(arg4: ByteArray) {
-    private val k: IntArray
+    private val k: IntArray = IntArray(96)
 
     init {
-        this.k = IntArray(96)
         if (arg4.size != 24) {
             throw IllegalArgumentException("Key was not 24 bytes, instead was " + arg4.size)
         }
@@ -32,21 +31,18 @@ class B(arg4: ByteArray) {
         var v2: Int
         v2 = 0
         while (v2 < 8) {
-            var v0: Int
-            v0 = 0
+            var v0: Int = 0
             while (v0 < 7) {
                 v4[55 - v2 * 7 - v0] = (arg9[arg10 + v2].toInt()ushr(v0) and 1).toByte()
                 ++v0
             }
             ++v2
         }
-        var v0: Int
 
-        v0 = 0
+        var v0: Int = 0
         while (v0 < 32) {
             v2 = 0
-            var v3: Int
-            v3 = 0
+            var v3: Int = 0
             while (v3 < 24) {
                 v2 = v2 or (v4[a!![v0 * 24 + v3].toInt()].toInt() shl b!![(v0 and 1) * 24 + v3].toInt())
                 ++v3
@@ -62,8 +58,7 @@ class B(arg4: ByteArray) {
         val v7 = 32
         var v0 = arg11.ushr(v7).toInt()
         var v2 = arg11.toInt()
-        var v1: Int
-        v1 = 0
+        var v1: Int = 0
         while (v1 < v7) {
             var v3 = a(this.k[arg10 + v1 + 1] xor v0, v8)
             v2 = v2 xor (j[v3.ushr(2) and 63] xor (g[v3.ushr(26) and 63] xor h[v3.ushr(18) and 63] xor i[v3.ushr(10) and 63]) xor c[(this.k[arg10 + v1] xor v0).ushr(26) and 63] xor d[(this.k[arg10 + v1] xor v0).ushr(18) and 63] xor e[(this.k[arg10 + v1] xor v0).ushr(10) and 63] xor f[(this.k[arg10 + v1] xor v0).ushr(2) and 63])
@@ -93,8 +88,7 @@ class B(arg4: ByteArray) {
         val v8 = 32
         var v0 = arg12.ushr(v8).toInt()
         var v2 = arg12.toInt()
-        var v1: Int
-        v1 = 0
+        var v1: Int = 0
         while (v1 < v8) {
             var v3 = a(this.k[arg11 + 31 - v1] xor v0, v9)
             v2 = v2 xor (j[v3.ushr(2) and 63] xor (c[(this.k[arg11 + 30 - v1] xor v0).ushr(26) and 63] xor d[(this.k[arg11 + 30 - v1] xor v0).ushr(18) and 63] xor e[(this.k[arg11 + 30 - v1] xor v0).ushr(10) and 63] xor f[(this.k[arg11 + 30 - v1] xor v0).ushr(2) and 63] xor g[v3.ushr(26) and 63] xor h[v3.ushr(18) and 63] xor i[v3.ushr(10) and 63]))

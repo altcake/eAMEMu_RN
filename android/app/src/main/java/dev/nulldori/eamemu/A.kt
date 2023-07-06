@@ -1,6 +1,7 @@
 package dev.nulldori.eamemu
 
 import java.io.UnsupportedEncodingException
+import java.util.Locale
 import kotlin.experimental.xor
 
 class A {
@@ -21,8 +22,8 @@ class A {
             throw RuntimeException("Invalid UID length")
         }
         return when {
-            arg11.toUpperCase().startsWith("E004") -> toKonamiID(arg11, 1.toByte())
-            arg11.toUpperCase().startsWith("0") -> toKonamiID(arg11, 2.toByte())
+            arg11.uppercase(Locale.getDefault()).startsWith("E004") -> toKonamiID(arg11, 1.toByte())
+            arg11.uppercase(Locale.getDefault()).startsWith("0") -> toKonamiID(arg11, 2.toByte())
             else -> throw RuntimeException("Invalid UID prefix")
         }
     }
@@ -44,8 +45,7 @@ class A {
         }
 
         var v4 = ByteArray(v7)
-        var v1: Int
-        v1 = 0
+        var v1: Int = 0
         while (v1 < v7) {
             v4[7 - v1] = v3[v1]
             ++v1
