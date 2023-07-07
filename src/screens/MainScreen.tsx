@@ -152,37 +152,30 @@ type MainScreenProps = NativeStackScreenProps<RootStackParams, 'Main'>;
 
 const MainScreen = (props: MainScreenProps) => {
   const { navigation } = props;
+  const { t } = useTranslation();
 
   // check native hcef module
   useEffect(() => {
     if (!Hcef.support) {
-      Alert.alert(
-        '오류',
-        '이 기기는 HCE-F를 지원하지 않습니다. 다른 기기로 다시 시도해 주세요.',
-        [
-          {
-            text: '확인',
-          },
-        ],
-      );
+      Alert.alert(t('alert.title.error'), t('alert.body.hcef_not_support'), [
+        {
+          text: t('alert.button.confirm'),
+        },
+      ]);
 
       return;
     }
 
     if (!Hcef.enabled) {
-      Alert.alert(
-        '오류',
-        'HCE-F 초기 설정에 실패했습니다.\n앱을 종료한 뒤, NFC를 활성화하고 다시 실행해 주세요.',
-        [
-          {
-            text: '확인',
-          },
-        ],
-      );
+      Alert.alert(t('alert.title.error'), t('alert.body.hcef_init_fail'), [
+        {
+          text: t('alert.button.confirm'),
+        },
+      ]);
 
       return;
     }
-  }, []);
+  }, [t]);
 
   // load card list from async storage
   const cardsQuery = useQuery<Card[]>('cards', getCards);

@@ -11,7 +11,7 @@
     },
     "body": {
       "hcef_not_support": "This device does not support HCE-F. Please try again with another device.",
-      "hcef_init_fail": "Failed to initialize HCE-F.\nAfter activating NFC, please restart the app\n",
+      "hcef_init_fail": "Failed to initialize HCE-F. After activating NFC, please restart the app",
       "card_remove": "Do you want to remove the card \"{{cardName}}\"?"
     },
     "button": {
