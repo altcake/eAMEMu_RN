@@ -24,9 +24,9 @@ class MainActivity : ReactActivity() {
         return DefaultReactActivityDelegate(
             this,
             mainComponentName,  // If you opted-in for the New Architecture, we enable the Fabric Renderer.
-            fabricEnabled,  // fabricEnabled
+            fabricEnabled  // fabricEnabled
             // If you opted-in for the New Architecture, we enable Concurrent React (i.e. React 18).
-            concurrentReactEnabled // concurrentRootEnabled
+            // concurrentRootEnabled
         )
     }
 

@@ -13,12 +13,12 @@ import com.facebook.react.bridge.ReactMethod
 
 class HcefModule internal constructor(context: ReactApplicationContext) :
     ReactContextBaseJavaModule(context), LifecycleEventListener {
-    var nfcAdapter: NfcAdapter? = null
-    var nfcFCardEmulation: NfcFCardEmulation? = null
-    var componentName: ComponentName? = null
-    var isHceFEnabled = false
-    var isHceFSupport = false
-    var nowUsing = false
+    private var nfcAdapter: NfcAdapter? = null
+    private var nfcFCardEmulation: NfcFCardEmulation? = null
+    private var componentName: ComponentName? = null
+    private var isHceFEnabled = false
+    private var isHceFSupport = false
+    private var nowUsing = false
 
     private val tag = "NfcFCardEmulation"
 
