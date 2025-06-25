@@ -1,6 +1,7 @@
 package dev.nulldori.eamemu
 
 import java.io.UnsupportedEncodingException
+import java.util.Locale
 import kotlin.experimental.xor
 
 class A {
@@ -21,8 +22,8 @@ class A {
             throw RuntimeException("Invalid UID length")
         }
         return when {
-            arg11.toUpperCase().startsWith("E004") -> toKonamiID(arg11, 1.toByte())
-            arg11.toUpperCase().startsWith("0") -> toKonamiID(arg11, 2.toByte())
+            arg11.uppercase(Locale.ROOT).startsWith("E004") -> toKonamiID(arg11, 1.toByte())
+            arg11.uppercase(Locale.ROOT).startsWith("0") -> toKonamiID(arg11, 2.toByte())
             else -> throw RuntimeException("Invalid UID prefix")
         }
     }
