@@ -29,9 +29,9 @@ class MainApplication : Application(), ReactApplication {
         }
 
         override val isNewArchEnabled: Boolean
-            protected get() = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+            get() = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
         override val isHermesEnabled: Boolean
-            protected get() = BuildConfig.IS_HERMES_ENABLED
+            get() = BuildConfig.IS_HERMES_ENABLED
     }
 
     override fun getReactNativeHost(): ReactNativeHost {

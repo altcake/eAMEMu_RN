@@ -19,7 +19,7 @@ class CardConvModule internal constructor(private var reactContext: ReactApplica
 
     @ReactMethod
     fun convertSID(sid: String, promise: Promise) {
-        if (sid.length != 16 || sid.startsWith("02FE") == false) {
+        if (sid.length != 16 || !sid.startsWith("02FE")) {
             promise.reject("SID_FORMAT_ERROR", "SID must be 16-digit hex string.")
         }
         val cardID = converter.toKonamiID(sid)

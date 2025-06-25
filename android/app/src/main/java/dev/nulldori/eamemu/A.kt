@@ -45,8 +45,7 @@ class A {
         }
 
         var v4 = ByteArray(v7)
-        var v1: Int
-        v1 = 0
+        var v1: Int = 0
         while (v1 < v7) {
             v4[7 - v1] = v3[v1]
             ++v1
