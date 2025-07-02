@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Shadow } from 'react-native-shadow-2';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components/native';
 
 import CardConv from '../modules/CardConv';
@@ -152,19 +152,19 @@ const CardEditScreen = (props: CardAddScreenProps | CardEditScreenProps) => {
   const [cardNumber, setCardNumber] = useState<string>(() => {
     return initialData?.sid ?? generateRandomCardNumber();
   });
-  const uid = useQuery(['uid', cardNumber], () =>
-    CardConv.convertSID(cardNumber),
-  );
+  const uid = useQuery({
+    queryKey: ['uid', cardNumber],
+
+    queryFn: () =>
+      CardConv.convertSID(cardNumber)
+  });
 
   const styledUid = useMemo(() => {
     if (!uid.isSuccess) {
       return t('card_edit.loading_card_number');
     }
 
-    return (
-      uid.data.match(/[A-Za-z0-9]{4}/g)?.join(' - ') ??
-      t('card_edit.invalid_card_number')
-    );
+    return (uid.data.match(/[A-Za-z0-9]{4}/g)?.join(' - ') ?? t('card_edit.invalid_card_number'));
   }, [t, uid]);
 
   const onChangeCardName = useCallback((s: string) => {
@@ -176,28 +176,26 @@ const CardEditScreen = (props: CardAddScreenProps | CardEditScreenProps) => {
   }, []);
 
   const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (card: Card) => {
+  const addMutation = useMutation({
+    mutationFn: (card: Card) => {
       return addCard(card);
     },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries('cards');
-        props.navigation.goBack();
-      },
-    },
-  );
-  const editMutation = useMutation(
-    ({ index, card }: { index: number; card: Card }) => {
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['cards'] });
+      props.navigation.goBack();
+    }
+  });
+  const editMutation = useMutation({
+    mutationFn: ({ index, card }: { index: number; card: Card }) => {
       return updateCard(index, card);
     },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries('cards');
-        props.navigation.goBack();
-      },
-    },
-  );
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['cards'] });
+      props.navigation.goBack();
+    }
+  });
 
   const save = useCallback(() => {
     const card = {

@@ -6,7 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Shadow } from 'react-native-shadow-2';
 import {
@@ -76,11 +76,10 @@ const CardList = (props: { cards: Card[] }) => {
   );
 
   const queryClient = useQueryClient();
-  const deleteMutation = useMutation((index: number) => removeCard(index), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('cards');
-    },
-  });
+  const deleteMutation = useMutation({
+    mutationFn: (index: number) => removeCard(index),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['cards'] }),
+  })
 
   const onDelete = useCallback(
     (index: number) => {
@@ -106,7 +105,7 @@ const CardList = (props: { cards: Card[] }) => {
   const onEdit = useCallback(
     (index: number) => {
       const card = cards[index];
-      navigation.navigate('Edit', {
+      navigation.navigateDeprecated('Edit', {
         index,
         card,
       });
@@ -151,7 +150,7 @@ const CardList = (props: { cards: Card[] }) => {
 type MainScreenProps = NativeStackScreenProps<RootStackParams, 'Main'>;
 
 const MainScreen = (props: MainScreenProps) => {
-  const { navigation } = props;
+  const { navigation } = props
 
   // check native hcef module
   useEffect(() => {
@@ -185,10 +184,10 @@ const MainScreen = (props: MainScreenProps) => {
   }, []);
 
   // load card list from async storage
-  const cardsQuery = useQuery<Card[]>('cards', getCards);
+  const cardsQuery = useQuery<Card[]>({ queryKey: ['cards'], queryFn: () => getCards() })
 
   const goToAdd = useCallback(() => {
-    navigation.navigate('Add');
+    navigation.navigateDeprecated('Add');
   }, [navigation]);
 
   return (
