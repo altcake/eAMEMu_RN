@@ -64,7 +64,7 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
             promise.reject("SET_NFCID2_FAIL", "setNfcid2ForService returned false")
             return
         }
-        if (!nfcFCardEmulation!!.enableService(currentActivity, componentName)) {
+        if (!nfcFCardEmulation!!.enableService(reactApplicationContext.currentActivity, componentName)) {
             promise.reject("FAIL", "enableService returned false")
         }
         nowUsing = true
@@ -76,7 +76,7 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
         if (nfcFCardEmulation == null || componentName == null) {
             promise.reject("NULL_ERROR", "nfcFCardEmulation or componentName is null")
         }
-        if (!nfcFCardEmulation!!.disableService(currentActivity)) {
+        if (!nfcFCardEmulation!!.disableService(reactApplicationContext.currentActivity)) {
             promise.reject("FAIL", "disableService returned false")
         }
         nowUsing = false
@@ -86,14 +86,14 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
     override fun onHostResume() {
         if (nfcFCardEmulation != null && componentName != null && nowUsing) {
             Log.d("MainActivity onResume()", "enabled!")
-            nfcFCardEmulation!!.enableService(currentActivity, componentName)
+            nfcFCardEmulation!!.enableService(reactApplicationContext.currentActivity, componentName)
         }
     }
 
     override fun onHostPause() {
         if (nfcFCardEmulation != null && componentName != null && nowUsing) {
             Log.d("MainActivity onPause()", "disabled...")
-            nfcFCardEmulation!!.disableService(currentActivity)
+            nfcFCardEmulation!!.disableService(reactApplicationContext.currentActivity)
         }
     }
 
