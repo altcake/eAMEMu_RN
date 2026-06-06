@@ -6,7 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Shadow } from 'react-native-shadow-2';
 import {
@@ -76,11 +76,10 @@ const CardList = (props: { cards: Card[] }) => {
   );
 
   const queryClient = useQueryClient();
-  const deleteMutation = useMutation((index: number) => removeCard(index), {
-    onSuccess: () => {
-      queryClient.invalidateQueries('cards');
-    },
-  });
+  const deleteMutation = useMutation({
+    mutationFn: (index: number) => removeCard(index),
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['cards'] }),
+  })
 
   const onDelete = useCallback(
     (index: number) => {
@@ -106,7 +105,7 @@ const CardList = (props: { cards: Card[] }) => {
   const onEdit = useCallback(
     (index: number) => {
       const card = cards[index];
-      navigation.navigate('Edit', {
+      navigation.navigateDeprecated('Edit', {
         index,
         card,
       });
@@ -151,37 +150,44 @@ const CardList = (props: { cards: Card[] }) => {
 type MainScreenProps = NativeStackScreenProps<RootStackParams, 'Main'>;
 
 const MainScreen = (props: MainScreenProps) => {
-  const { navigation } = props;
-  const { t } = useTranslation();
+  const { navigation } = props
 
   // check native hcef module
   useEffect(() => {
     if (!Hcef.support) {
-      Alert.alert(t('alert.title.error'), t('alert.body.hcef_not_support'), [
-        {
-          text: t('alert.button.confirm'),
-        },
-      ]);
+      Alert.alert(
+        '오류',
+        '이 기기는 HCE-F를 지원하지 않습니다. 다른 기기로 다시 시도해 주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
 
       return;
     }
 
     if (!Hcef.enabled) {
-      Alert.alert(t('alert.title.error'), t('alert.body.hcef_init_fail'), [
-        {
-          text: t('alert.button.confirm'),
-        },
-      ]);
+      Alert.alert(
+        '오류',
+        'HCE-F 초기 설정에 실패했습니다.\n앱을 종료한 뒤, NFC를 활성화하고 다시 실행해 주세요.',
+        [
+          {
+            text: '확인',
+          },
+        ],
+      );
 
       return;
     }
-  }, [t]);
+  }, []);
 
   // load card list from async storage
-  const cardsQuery = useQuery<Card[]>('cards', getCards);
+  const cardsQuery = useQuery<Card[]>({ queryKey: ['cards'], queryFn: () => getCards() })
 
   const goToAdd = useCallback(() => {
-    navigation.navigate('Add');
+    navigation.navigateDeprecated('Add');
   }, [navigation]);
 
   return (

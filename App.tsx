@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainScreen from './src/screens/MainScreen';
 import { Card } from './src/types';
 import CardEditScreen from './src/screens/CardEditScreen';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StatusBar, useColorScheme } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 

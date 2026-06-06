@@ -12,16 +12,16 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 
 class HcefModule internal constructor(context: ReactApplicationContext) :
-    ReactContextBaseJavaModule(context), LifecycleEventListener {
-    private var nfcAdapter: NfcAdapter? = null
-    private var nfcFCardEmulation: NfcFCardEmulation? = null
-    private var componentName: ComponentName? = null
-    private var isHceFEnabled = false
-    private var isHceFSupport = false
-    private var nowUsing = false
-
+    ReactContextBaseJavaModule(
+        context
+    ), LifecycleEventListener {
+    var nfcAdapter: NfcAdapter? = null
+    var nfcFCardEmulation: NfcFCardEmulation? = null
+    var componentName: ComponentName? = null
+    var isHceFEnabled = false
+    var isHceFSupport = false
+    var nowUsing = false
     private val tag = "NfcFCardEmulation"
-
     init {
         context.addLifecycleEventListener(this)
 
@@ -64,7 +64,7 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
             promise.reject("SET_NFCID2_FAIL", "setNfcid2ForService returned false")
             return
         }
-        if (!nfcFCardEmulation!!.enableService(currentActivity, componentName)) {
+        if (!nfcFCardEmulation!!.enableService(reactApplicationContext.currentActivity, componentName)) {
             promise.reject("FAIL", "enableService returned false")
         }
         nowUsing = true
@@ -76,7 +76,7 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
         if (nfcFCardEmulation == null || componentName == null) {
             promise.reject("NULL_ERROR", "nfcFCardEmulation or componentName is null")
         }
-        if (!nfcFCardEmulation!!.disableService(currentActivity)) {
+        if (!nfcFCardEmulation!!.disableService(reactApplicationContext.currentActivity)) {
             promise.reject("FAIL", "disableService returned false")
         }
         nowUsing = false
@@ -86,16 +86,18 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
     override fun onHostResume() {
         if (nfcFCardEmulation != null && componentName != null && nowUsing) {
             Log.d("MainActivity onResume()", "enabled!")
-            nfcFCardEmulation!!.enableService(currentActivity, componentName)
+            nfcFCardEmulation!!.enableService(reactApplicationContext.currentActivity, componentName)
         }
     }
 
     override fun onHostPause() {
         if (nfcFCardEmulation != null && componentName != null && nowUsing) {
             Log.d("MainActivity onPause()", "disabled...")
-            nfcFCardEmulation!!.disableService(currentActivity)
+            nfcFCardEmulation!!.disableService(reactApplicationContext.currentActivity)
         }
     }
 
     override fun onHostDestroy() {}
+
+    companion object
 }

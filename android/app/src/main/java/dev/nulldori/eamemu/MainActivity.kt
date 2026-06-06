@@ -12,7 +12,7 @@ class MainActivity : ReactActivity() {
      * Returns the name of the main component registered from JavaScript. This is used to schedule
      * rendering of the component.
      */
-    override fun getMainComponentName(): String {
+    override fun getMainComponentName(): String? {
         return "eAMEMu"
     }
 
@@ -23,10 +23,10 @@ class MainActivity : ReactActivity() {
     override fun createReactActivityDelegate(): ReactActivityDelegate {
         return DefaultReactActivityDelegate(
             this,
-            mainComponentName,  // If you opted-in for the New Architecture, we enable the Fabric Renderer.
-            fabricEnabled  // fabricEnabled
+            mainComponentName!!,  // If you opted-in for the New Architecture, we enable the Fabric Renderer.
+            fabricEnabled,  // fabricEnabled
             // If you opted-in for the New Architecture, we enable Concurrent React (i.e. React 18).
-            // concurrentRootEnabled
+            concurrentReactEnabled // concurrentRootEnabled
         )
     }
 

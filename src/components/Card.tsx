@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { StyleSheet, TextProps, TouchableOpacity, View } from 'react-native';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Shadow } from 'react-native-shadow-2';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -70,14 +70,14 @@ const CardView = (props: CardViewProps) => {
     onPressFromProps?.(index);
   }, [onPressFromProps, index]);
 
-  const uid = useQuery(['uid', card.sid], () => CardConv.convertSID(card.sid));
+  const uid = useQuery({
+    queryKey: ['uid', card.sid],
+    queryFn: () => CardConv.convertSID(card.sid)
+  });
 
   const styledUid = useMemo(() => {
     if (uid.isSuccess) {
-      return (
-        uid.data.match(/[A-Za-z0-9]{4}/g)?.join(' - ') ??
-        '올바르지 않은 카드 번호'
-      );
+      return (uid.data.match(/[A-Za-z0-9]{4}/g)?.join(' - ') ?? '올바르지 않은 카드 번호');
     } else {
       return '카드 번호 로딩중...';
     }
