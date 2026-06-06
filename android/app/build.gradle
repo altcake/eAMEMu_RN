@@ -81,13 +81,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "dev.nulldori.eamemu"
+    namespace "dev.gryadev.eamemu"
     defaultConfig {
-        applicationId "dev.nulldori.eamemu"
+        applicationId "dev.gryadev.eamemu"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 311
-        versionName "3.1.1"
+        versionCode 400
+        versionName "4.0.0"
     }
     // signingConfigs {
     //     debug {

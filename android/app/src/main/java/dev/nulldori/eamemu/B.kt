@@ -1,4 +1,4 @@
-package dev.nulldori.eamemu
+package dev.gryadev.eamemu
 
 class B(arg4: ByteArray) {
     private val k: IntArray = IntArray(96)

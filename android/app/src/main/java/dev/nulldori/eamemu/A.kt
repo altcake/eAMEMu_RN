@@ -1,4 +1,4 @@
-package dev.nulldori.eamemu
+package dev.gryadev.eamemu
 
 import java.io.UnsupportedEncodingException
 import java.util.Locale

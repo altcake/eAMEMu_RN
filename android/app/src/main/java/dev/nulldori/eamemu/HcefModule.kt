@@ -1,4 +1,4 @@
-package dev.nulldori.eamemu
+package dev.gryadev.eamemu
 
 import android.content.ComponentName
 import android.content.pm.PackageManager
@@ -35,7 +35,7 @@ class HcefModule internal constructor(context: ReactApplicationContext) :
         if (nfcAdapter != null && nfcAdapter!!.isEnabled) {
             nfcFCardEmulation = NfcFCardEmulation.getInstance(nfcAdapter)
             componentName =
-                ComponentName("dev.nulldori.eamemu", "dev.nulldori.eamemu.eAMEMuService")
+                ComponentName("dev.gryadev.eamemu", "dev.gryadev.eamemu.eAMEMuService")
             if (nfcFCardEmulation != null) {
                 nfcFCardEmulation!!.registerSystemCodeForService(componentName, "4000")
                 isHceFEnabled = true

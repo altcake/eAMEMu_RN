@@ -1,4 +1,4 @@
-package dev.nulldori.eamemu
+package dev.gryadev.eamemu
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

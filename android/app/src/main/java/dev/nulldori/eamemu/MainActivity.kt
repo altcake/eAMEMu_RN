@@ -1,4 +1,4 @@
-package dev.nulldori.eamemu
+package dev.gryadev.eamemu
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
@@ -25,8 +25,6 @@ class MainActivity : ReactActivity() {
             this,
             mainComponentName!!,  // If you opted-in for the New Architecture, we enable the Fabric Renderer.
             fabricEnabled,  // fabricEnabled
-            // If you opted-in for the New Architecture, we enable Concurrent React (i.e. React 18).
-            concurrentReactEnabled // concurrentRootEnabled
         )
     }
 
