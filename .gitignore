@@ -35,6 +35,7 @@ local.properties
 *.keystore
 !debug.keystore
 index.android.bundle
+android/app/src/main/res
 
 # node.js
 #
