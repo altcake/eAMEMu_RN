@@ -63,13 +63,27 @@ const CardList = (props: { cards: Card[] }) => {
   const toggleHcef = useCallback(
     async (index: number) => {
       const card = cards[index];
-      if (enabledCardIndex === index) {
-        // disable
-        await Hcef.disableService();
-        setEnabledCardIndex(null);
-      } else {
-        await Hcef.enableService(card.sid);
-        setEnabledCardIndex(index);
+      try{
+        if (enabledCardIndex === index) {
+          // disable
+          await Hcef.disableService();
+          setEnabledCardIndex(null);
+        } else {
+          await Hcef.enableService(card.sid);
+          setEnabledCardIndex(index);
+        }
+      }
+      catch (error) {
+        console.error("Error while activating card: ", error.message)
+        Alert.alert(
+        t('alert.title.error'),
+        t('alert.body.hcef_init_fail'),
+        [
+          {
+            text: t('alert.button.confirm'),
+          },
+        ],
+      );
       }
     },
     [cards, enabledCardIndex],

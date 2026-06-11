@@ -86,8 +86,8 @@ android {
         applicationId "dev.gryadev.eamemu"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 400
-        versionName "4.0.0"
+        versionCode 401
+        versionName "4.0.1"
     }
     // signingConfigs {
     //     debug {
