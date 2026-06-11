@@ -151,16 +151,16 @@ type MainScreenProps = NativeStackScreenProps<RootStackParams, 'Main'>;
 
 const MainScreen = (props: MainScreenProps) => {
   const { navigation } = props
-
+  const { t } = useTranslation();
   // check native hcef module
   useEffect(() => {
     if (!Hcef.support) {
       Alert.alert(
-        '오류',
-        '이 기기는 HCE-F를 지원하지 않습니다. 다른 기기로 다시 시도해 주세요.',
+        t('alert.title.error'),
+        t('alert.body.hcef_not_support'),
         [
           {
-            text: '확인',
+            text: t('alert.button.confirm'),
           },
         ],
       );
@@ -170,18 +170,18 @@ const MainScreen = (props: MainScreenProps) => {
 
     if (!Hcef.enabled) {
       Alert.alert(
-        '오류',
-        'HCE-F 초기 설정에 실패했습니다.\n앱을 종료한 뒤, NFC를 활성화하고 다시 실행해 주세요.',
+        t('alert.title.error'),
+        t('alert.body.hcef_init_fail'),
         [
           {
-            text: '확인',
+            text: t('alert.button.confirm'),
           },
         ],
       );
 
       return;
     }
-  }, []);
+  }, [t]);
 
   // load card list from async storage
   const cardsQuery = useQuery<Card[]>({ queryKey: ['cards'], queryFn: () => getCards() })
@@ -202,6 +202,7 @@ const MainScreen = (props: MainScreenProps) => {
             offset={[0, 2]}
           >
             {/* shadow가 정상적으로 적용되지 않는 버그가 있어서 borderRadius 스타일을 분리 */}
+            {/* Separated the borderRadius style due to a bug where the shadow was not applied correctly */}
             <AddButton onPress={goToAdd} style={styles.addButtonRadius}>
               <AddButtonIcon />
             </AddButton>

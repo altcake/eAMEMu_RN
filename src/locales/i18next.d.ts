@@ -1,7 +1,7 @@
 // import the original type declarations
 import 'i18next';
 // import all namespaces (for the default language, only)
-import { default as ko } from './ko.json';
+import { default as en } from './en.json';
 
 declare module 'i18next' {
   // Extend CustomTypeOptions
@@ -10,7 +10,7 @@ declare module 'i18next' {
     defaultNS: 'translation';
     // custom resources type
     resources: {
-      translation: typeof ko;
+      translation: typeof en;
     };
     // other
   }
